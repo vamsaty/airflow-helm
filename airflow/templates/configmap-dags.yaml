@@ -1,0 +1,15 @@
+{{- $dagDir := printf "%s/*" "files/dags" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: local-dag-files
+    namespace: {{ .Release.Namespace }}
+    lables:
+        app.kubernetes.io/name: {{ include "airflow.name" . }}
+        helm.sh/chart: {{ include "airflow.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+{{- if .Files.Glob $dagDir }}
+{{ (.Files.Glob $dagDir).AsConfig | indent 2 }}
+{{ end }}
