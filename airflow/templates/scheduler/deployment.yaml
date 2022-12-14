@@ -196,7 +196,8 @@ spec:
       volumes:
         {{- if .Files.Glob "files/dags/*.py" }}
         - name: local-dag-files
-          emptyDir: {}
+          configMap:
+            name: local-dag-files
         {{- end }}
         {{- if .Values.dags.existingConfigmap }}
         - name: load-external-dag-files

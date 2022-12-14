@@ -234,9 +234,11 @@ data:
         {{- include "common.tplvalues.render" (dict "value" .Values.worker.sidecars "context" $) | trim | nindent 8 }}
         {{- end }}
       volumes:
+        {{- if .Files.Glob "files/dags/*.py" }}
         - name: local-dag-files
           configMap:
-            name: {{ .Values.dags.existingConfigmap }}
+            name: local-dag-files
+        {{- end }}
         - name: k8s-executor-config
           emptyDir: {}
         {{- if .Values.dags.existingConfigmap }}

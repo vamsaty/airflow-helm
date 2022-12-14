@@ -15,8 +15,6 @@ Returns the volume mounts that will be used by git containers (clone and sync)
 {{- if .Values.git.dags.enabled }}
 - name: git-cloned-dags
   mountPath: /dags
-- name: local-dag-files
-  mountPath: /opt/dags
 {{- end }}
 {{- if .Values.git.plugins.enabled }}
 - name: git-cloned-plugins
